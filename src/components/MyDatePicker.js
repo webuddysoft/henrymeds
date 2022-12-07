@@ -13,7 +13,7 @@ export default function MyDatePicker({value, handleChange, ...props}) {
           inputFormat={DATE_FORMAT}
           value={value}
           onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
+          renderInput={(params) => <TextField size='small' {...params} />}
           {...props}
         />
     </LocalizationProvider>

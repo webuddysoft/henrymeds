@@ -1,44 +1,9 @@
-import { Box, Breadcrumbs, Container, Divider, FormControl, InputLabel, Link, MenuItem, Select, Skeleton, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Container, Stack } from "@mui/material";
 import { getClients } from "../libs/api";
-
-const SelectClient = ({clients, selectClient}) => {
-  return (
-    <Stack gap={1}>
-      <Typography variant="h3">Login as</Typography>
-      {clients === null && <Skeleton height={80} /> }
-      {clients && (
-        <FormControl>
-          <InputLabel id="client-dropdown-label">Select a Client</InputLabel>
-          <Select 
-            labelId="client-dropdown-label"
-            label="Select a Client"
-            onChange={(e) => {selectClient(e.target.value)}}
-            value={""}
-          >
-            <MenuItem value="">Select a Client</MenuItem>
-            {clients.map((c, i) => <MenuItem key={`item${i}`} value={c.id}>{c.name}</MenuItem>)}
-          </Select>
-        </FormControl>
-      )}
-    </Stack>
-  )
-}
-
-const SelectTimeSlots = ({client}) => {
-  return (
-    <Stack>
-      <Stack direction="row" justifyContent="space-between">
-        <Typography variant="h3">Reservations</Typography>
-        
-      </Stack>
-      <Stack>
-        
-      </Stack>
-    </Stack>
-  )
-}
+import MyBreadcrumbs from "../components/MyBreadcrumbs";
+import Reservation from "../components/Reservation";
+import SelectClient from "../components/SelectClient";
 
 export default function Clients() {
   const [clients, setClients] = useState(null);
@@ -53,7 +18,7 @@ export default function Clients() {
       });
   }, []);
 
-  const selectClient = (cId) => {
+  const selectClientHandler = (cId) => {
     const c = clients.find(c => c.id === cId);
     setClient(c);
   }
@@ -61,22 +26,17 @@ export default function Clients() {
   return (
     <Container maxWidth="sm">
       <Stack marginTop={2} gap={3}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link component={RouterLink} to="/">
-            Home
-          </Link>
-          {!client ? 
-            <Typography color="text.primary">Clients</Typography> : 
-            <Link onClick={() => setClient(null)} sx={{cursor: "pointer"}}>Clients</Link>}
-          {client && <Typography color="text.primary">{client.name}</Typography>}
-        </Breadcrumbs>        
-        
+        <MyBreadcrumbs
+          links={!client ? [{"title": "Clients"}] : 
+            [
+              {"title": "Clients", "onClick": () => setClient(null)},
+              {"title": client.name}
+            ]}
+        />
         {!client ?
-          <SelectClient clients={clients} selectClient={selectClient} /> :
-          <SelectTimeSlots client={client} />
+          <SelectClient clients={clients} selectClientHandler={selectClientHandler} /> :
+          <Reservation client={client} />
         }
-        
-
       </Stack>
     </Container>
   );

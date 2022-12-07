@@ -1,5 +1,5 @@
 import { Button, Container, Stack, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 function Home() {
   return (
@@ -27,19 +27,19 @@ function Home() {
             size='large'
             variant='contained'
             color='success'
+            LinkComponent={RouterLink}
+            to="/providers"
           >
-            <Link to="/providers" style={{textDecoration: "none"}}>
               I am a Provider
-            </Link>
           </Button>          
           <Button
             size='large'
             variant='contained'
             color='secondary'
+            LinkComponent={RouterLink}
+            to="/clients"
           >
-            <Link to="/clients" style={{textDecoration: "none"}}>
             I am a Client
-            </Link>
           </Button>
         </Stack>
       </Stack>

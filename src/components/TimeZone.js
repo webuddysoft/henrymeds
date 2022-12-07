@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 
-export default function Timer() {
+export default function TimeZone() {
   const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const currentTimezoneOffset = -1 * (new Date().getTimezoneOffset() / 60);
 
